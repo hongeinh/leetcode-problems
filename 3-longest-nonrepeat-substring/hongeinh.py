@@ -5,25 +5,19 @@ class Solution(object):
         :rtype: int
         """
         length = len(s)
-        if (length) == 0:
-            return
-        max_str = 1
-        tmp_str = max_str
-        i = 0
-        j = 0
+        max_len = 0
+        i = 0           # ref to tail of the substring
+        j = 0           # ref to head of the substring
+        indices = {}    # save the indices of each character accountered
         while i < length:
-            print(i, j, tmp_str, max_str)
-            if s[i] in tmp_str:
-                if len(tmp_str) > max_str:
-                    max_str = len(tmp_str)
-                i = i + tmp_str.index(s[i])
-                j = 1
-                # i = tmp_str.index(s[i]) + 1
-                tmp_str = s[i]
+            if s[i] not in indices or indices[s[i]] < j:   # indices[s[i]] < j: means that the currently considered substring does not contain the char s[i]
+                if i - j + 1 > max_len:
+                    max_len = i - j + 1
             else:
-                tmp_str += s[i]
+                index = indices[s[i]]
+                if j <= index:
+                    j = index + 1
+            indices[s[i]] = i
             i += 1
-        return max_str
+        return max_len
 
-sol = Solution()
-print(sol.lengthOfLongestSubstring('abcabcbb'))
