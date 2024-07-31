@@ -1,26 +1,28 @@
 class Solution(object):
-    def isPalindrome(self, x):
+    def longestPalindrome(self, s):
         """
-        :type x: int
-        :rtype: bool
+        :type s: str
+        :rtype: str
         """
-        if x < 0:
-            return False
-        if x == 0:
-            return True
-        tmp_x = x
-        flipped_values = []
-        flipped_value = 0
-        while tmp_x != 0:
-            quotient, remainder = divmod(tmp_x, 10)
-            tmp_x = quotient
-            flipped_values.insert(0, remainder)
+        if len(s) <= 1 or s == s[::-1]:
+            return s
+        else:
+            start, maxlen = 0, 1
+            for i in range(1, len(s)):
+                print("start: ", start)
+                print("max len: ", maxlen)
+                print(i - maxlen - 1)
+                odd = s[i - maxlen - 1 : i + 1]
+                even = s[i - maxlen : i + 1]
+                print("odd even: ", odd, even)
+                if i - maxlen - 1 >= 0 and odd == odd[::-1]:
+                    start = i - maxlen - 1
+                    maxlen = maxlen + 2
+                    continue
+                if even == even[::-1]:
+                    start = i - maxlen
+                    maxlen = maxlen + 1
+            return s[start : maxlen + start]
 
-        for i in range(0, len(flipped_values)):
-            flipped_value += flipped_values[i] * pow(10, i)
 
-        print(flipped_value)
-        print(x)
-        if flipped_value != x:
-            return False
-        return True
+print(Solution().longestPalindrome("babad"))
