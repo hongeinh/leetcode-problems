@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/majority-element/description/
 class Solution:
     def majorityElement(self, nums) -> int:
         count = 0
